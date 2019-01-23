@@ -1,0 +1,81 @@
+html,body{ 
+	width:100%;
+	height:100%;
+}
+canvas{
+  display:block;
+  vertical-align:bottom;
+}
+#particles-js{
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  background-image: url('');
+  background-size: cover;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+}
+header{
+	text-align: center;
+	margin-top: 20px;
+	padding: 10px;
+}
+.copy{
+	font-size: 15px;
+}
+.logos{
+	margin: 0 20px 0 20px; 
+}
+.menu{
+	display: inline-block;
+	margin: auto;
+	text-align: center;
+}
+.menup{
+	width: 80%;
+	margin: auto;
+	text-align: center;
+	margin-bottom: 30px;
+}
+main{
+	position: absolute;
+	width: 1024px;
+	height: 90%;
+	background: #fdf5f5; 
+	border-radius: 10px; 
+	margin-top: 20px; 
+	margin-bottom: 25px;
+}
+.menuprinci{
+	margin: 30px;
+}
+footer {
+  text-align: center;
+  margin: auto;
+  padding: 5px;
+  position: absolute;
+  top: 75%;
+  bottom: 0;
+  width: 100%;
+}
+.btn-circle.btn-xl {
+  width: 200px;
+  height: 200px;
+  border-radius: 150px;
+}
+
+.menuprincilc {
+  margin: 0px 30px 0 30px;
+  width: 100px;
+  height: 100px;
+  padding: 0px 0px;
+  border-radius: 50px;
+}
+
+.imgfunc{
+	width: 100%;
+	border-radius: 100%;
+}
+.js-plotly-plot .plotly .modebar{
+	display: none !important;
+}
