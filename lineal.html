@@ -1,0 +1,106 @@
+<head>
+  <meta charset="utf-8" />
+  <script type="text/javascript" src="js/math.min.js"></script>
+  <script type="text/javascript" src="js/plotly.min.js"></script>
+  <script type="text/javascript" src="js/jquery.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="css/personalstyle.css">
+</head>
+<main style="margin-top: 0px; border-radius: 0px;">
+	<div class="menup">
+		<nav>
+	      <a href="menulineal.html" target="frame1" class="btn btn-primary menuprincilc"><img class="imgfunc" title="Funcion Lineal" src="img/Linear_Function.png" alt="Icon Linear Function"></a>
+			  <a href="cuadratica.html" class="btn btn-warning menuprincilc"><img class="imgfunc" title="Funcion Cuadratica" src="img/Cuadratica_Function.png" alt="Icon Cuadratica Function"></a>
+	    </nav>
+	    <hr>
+	    <h2>Función Lineal</h2>
+	    <form action="#" id="datos">
+	          <div class="form-group">
+	          <label>P1 (</label>
+	          <input style="width: 40px;" type="number" name="x1" id="p1x">
+	          <label>,</label>
+	          <input style="width: 40px;" type="number" name="y1" id="p1y">
+	          <label>)</label><br>
+	          <label>P2 (</label>
+	          <input style="width: 40px;" type="number" name="x2" id="p2x">
+	          <label>,</label>
+	          <input style="width: 40px;" type="number" name="y2" id="p2y">
+	          <label>)</label><br>
+	          <button type="submit" id="bDatos" class="btn btn-success">Calcular</button>
+	          <input type="reset" value="Limpiar" class="btn btn-warning" onclick="limpiar();">
+	      </div>
+	    </form>
+
+		<div id="linealDiv1"></div>
+	    <div id="linealDiv"></div>
+	    <div id="linealDiv2"></div>
+	    <div id="plot"></div>
+
+	    <script>
+	    	$(function () {
+	    		$(document).on('click', '#bDatos', function (e) {
+	    			e.preventDefault();
+	    			var vlrX1 = $('#p1x').val(); // Valor de x P1
+	                var vlrY1 = $('#p1y').val(); // Valor de y P1
+	                var vlrX2 = $('#p2x').val(); // Valor de x P2
+	                var vlrY2 = $('#p2y').val(); // Valor de y P2
+	                var error = (!vlrX1 || !vlrY1 || !vlrX2 || !vlrY2) ?
+                            'Por favor ingrese los valores solicitados' : '';
+	                if (error !== '') {
+	                    alert(error);
+	                    return;
+	                }
+
+	                var deltaX = parseInt(vlrX2) - parseInt(vlrX1) //Valor Delta X
+	                var deltaY = parseInt(vlrY2) - parseInt(vlrY1) //Valor Delta Y
+	                if (deltaX == 0){
+	                	alert("El valorde de Delta X no puede ser igual a 0")
+	                	return;
+	                }
+	                var pendiente = deltaY / deltaX //Pendiente
+	                document.getElementById("linealDiv1").innerHTML = "La Pendiente es "+ pendiente.toFixed(2);
+
+	                //Ecuacion de la recta
+	                var y = parseInt(pendiente) * (- (parseInt(vlrX1))) + parseInt(vlrY1)
+	                var txt;
+	                if(y>0){
+	                	txt = "Ecuacion de la recta "+ pendiente.toFixed(2) + "X+" + y.toFixed(2);
+	                }else{
+	                	txt = "Ecuacion de la recta "+ pendiente.toFixed(2) + "X" + y.toFixed(2);
+	                };
+
+	                document.getElementById("linealDiv").innerHTML = txt;
+	                document.getElementById("linealDiv2").innerHTML = "Corte con eje Y: "+ y.toFixed(2);
+
+	                // Tabla de valores tomando rango de -10 hasta 10
+	                var datos = {
+	                    x: [],
+	                    y: [],
+	                    type: 'scatter'
+	                }
+	                var rangoX = -10;
+	                for(i = 0; i < 20; i++){
+	                    datos.x[i] = rangoX;
+	                    rangoX ++;
+	                }
+	                var xAct = 0;
+	                for (i = 0; i < 20; i++) {
+	                    xAct = datos.x[i];
+	                    datos.y[i] = (parseInt(pendiente) * parseInt(xAct)) + parseInt(y);
+	                }
+
+	                // Enviar tabla de valores a graficar
+	                const data = [datos]
+	                Plotly.newPlot('plot', data)
+	            });
+	    	});
+
+	    	function limpiar(){	
+	    		document.getElementById("linealDiv1").innerHTML = '';
+	    		document.getElementById("linealDiv").innerHTML = '';
+	    		document.getElementById("linealDiv2").innerHTML = '';
+	    		document.getElementById("plot").innerHTML = '';
+	    	}
+	    </script>
+	</div>
+</main>

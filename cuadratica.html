@@ -1,0 +1,93 @@
+<head>
+  <meta charset="utf-8" />
+  <script type="text/javascript" src="js/math.min.js"></script>
+  <script type="text/javascript" src="js/plotly.min.js"></script>
+  <script type="text/javascript" src="js/jquery.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="css/personalstyle.css">
+</head>
+<main style="margin-top: 0px; border-radius: 0px;">
+	<div class="menup">
+		<nav>
+      <a href="menulineal.html" target="frame1" class="btn btn-primary menuprincilc"><img class="imgfunc" title="Funcion Lineal" src="img/Linear_Function.png" alt="Icon Linear Function"></a>
+		  <a href="cuadratica.html" class="btn btn-warning menuprincilc"><img class="imgfunc" title="Funcion Cuadratica" src="img/Cuadratica_Function.png" alt="Icon Cuadratica Function"></a>
+    </nav>
+    <hr>
+    <h2>Función Cuadratica</h2>
+    <form action="#" id="datos">
+          <div class="form-group">
+          <input style="width: 40px;" type="number" name="numA" id="datosA">
+          <label>X<sup>2</sup>+</label>
+          <input style="width: 40px;" type="number" name="numB" id="datosB">
+          <label>X+</label>
+          <input style="width: 40px;" type="number" name="numC" id="datosC"><br>
+          <button type="submit" id="bDatos" class="btn btn-success">Calcular</button>
+          <input type="reset" value="Limpiar" class="btn btn-warning" onclick="limpiar();">
+      </div>
+    </form>
+
+    <div id="cuadraticaDiv1"></div>
+    <div id="cuadraticaDiv"></div>
+    <div id="plot"></div>
+
+    <script>
+       $(function () {
+            $(document).on('click', '#bDatos', function (e) {
+                e.preventDefault();
+                var vlrA = $('#datosA').val(); // Valor de A
+                var vlrB = $('#datosB').val(); // Valor de B
+                var vlrC = $('#datosC').val(); // Valor de C
+                var disc =  Math.pow(parseInt(vlrB), 2) - 4 * parseInt(vlrA) * parseInt(vlrC); // Discriminante
+                var error = (!vlrA || !vlrB || !vlrC) ?
+                            'Por favor ingrese los valores solicitados' :
+                            (vlrA == 0 ? 'El valor de A no puede ser igual a 0' : '');
+                if (error !== '') {
+                    alert(error);
+                    return;
+                }
+                if (disc<0) {
+                  alert('No hay solución en los reales')
+                  return;
+                }
+
+                // Tabla de valores tomando rango de -10 hasta 10
+                var datos = {
+                    x: [],
+                    y: [],
+                    type: 'scatter'
+                }
+                var rangoX = -10;
+                for(i = 0; i < 20; i++){
+                    datos.x[i] = rangoX;
+                    rangoX ++;
+                }
+                var xAct = 0;
+                for (i = 0; i < 20; i++) {
+                    xAct = datos.x[i];
+                    datos.y[i] = (parseInt(vlrA) * Math.pow(xAct, 2)) + (parseInt(vlrB) * xAct) + parseInt(vlrC);
+                }
+
+                // Hallar el vertice
+                var h = (-(parseInt(vlrB)))/(2 * parseInt(vlrA));
+                var k = parseInt(vlrA) * Math.pow(h, 2) + parseInt(vlrB) * h + parseInt(vlrC)
+                document.getElementById("cuadraticaDiv1").innerHTML = "El Vertice es "+ "(" + h.toFixed(2) +", "+ k.toFixed(2) + ")";
+
+                // Cortes con el eje X 
+                x1=(- parseInt(vlrB) -Math.sqrt(disc)) / (2 * parseInt(vlrA));
+                x2=(- parseInt(vlrB) +Math.sqrt(disc)) / (2 * parseInt(vlrA));
+                document.getElementById("cuadraticaDiv").innerHTML = "Los cortes con el eje X son: " + "(" + x1.toFixed(2) + ", " + x2.toFixed(2) + ")";
+
+                // Enviar tabla de valores a graficar
+                const data = [datos]
+                Plotly.newPlot('plot', data)
+            });
+        });
+
+       function limpiar(){  
+          document.getElementById("cuadraticaDiv1").innerHTML = '';
+          document.getElementById("cuadraticaDiv").innerHTML = '';
+          document.getElementById("plot").innerHTML = '';
+        }
+    </script>
+	</div>
+</main>
